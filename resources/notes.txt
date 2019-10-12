@@ -1,0 +1,6 @@
+współczynnik zmienności =  odchylenie standardowe / średnia
+
+
+# średnia bedzie opisywała obciążenie systemu systemu
+# generowanie zadan na podstawie bimodalnego
+	+ czas przekładania(losujemy z bimodalnego ilość na jednostkę czasu i rozkładamy równomiernie)
