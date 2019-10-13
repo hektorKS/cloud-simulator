@@ -1,7 +1,7 @@
 import random
+from math import sqrt
 
 import numpy as np
-from math import sqrt
 
 SEED_MIN_VALUE = 0
 SEED_MAX_VALUE = 100000
@@ -9,7 +9,11 @@ SEED_MAX_VALUE = 100000
 
 class BimodalDistributionGenerator:
 
-    def __init__(self, number_of_elements: int, standard_deviation: int, coefficient_of_variation: int, mean1: int,
+    def __init__(self,
+                 number_of_elements: int,
+                 standard_deviation: int,
+                 coefficient_of_variation: float,
+                 mean1: int,
                  seed: int = None):
         assert number_of_elements > 0
         assert standard_deviation > 0
@@ -24,10 +28,8 @@ class BimodalDistributionGenerator:
     def generate(self):
         self.__reset_numpy_random_state()
         bimodal_distribution = np.concatenate((
-            self.__generate_normal_distribution_of_half(int(self.mean1),
-                                                        self.percentage_of_short_elements),
-            self.__generate_normal_distribution_of_half(int(self.mean2),
-                                                        1.0 - self.percentage_of_short_elements)
+            self.__generate_normal_distribution_of_half(int(self.mean1), self.percentage_of_short_elements),
+            self.__generate_normal_distribution_of_half(int(self.mean2), 1.0 - self.percentage_of_short_elements)
         ))
         return bimodal_distribution.astype(int)
 
