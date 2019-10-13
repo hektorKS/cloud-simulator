@@ -9,12 +9,8 @@ SEED_MAX_VALUE = 100000
 
 class BimodalDistributionGenerator:
 
-    def __init__(self,
-                 number_of_elements: int,
-                 standard_deviation: int,
-                 coefficient_of_variation: float,
-                 mean1: int,
-                 seed: int = None):
+    def __init__(self, number_of_elements: int, standard_deviation: int,
+                 coefficient_of_variation: float, mean1: int, seed: int = None):
         assert number_of_elements > 0
         assert standard_deviation > 0
         self.number_of_elements = number_of_elements
