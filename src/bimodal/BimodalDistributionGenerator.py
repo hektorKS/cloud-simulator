@@ -8,35 +8,42 @@ SEED_MAX_VALUE = 100000
 
 class BimodalDistributionGenerator:
 
-    def __init__(self, number_of_elements: int, space_between_peaks: int, standard_deviation: int,
-                 percentage_of_short_elements: float, seed: int = None):
-        assert number_of_elements > 0
-        assert space_between_peaks > 0
-        assert standard_deviation > 0
-        assert percentage_of_short_elements >= 0.0
-        assert percentage_of_short_elements <= 1.0
-        self.number_of_elements = number_of_elements
-        self.space_between_peaks = space_between_peaks
-        self.standard_deviation = standard_deviation
+    def __init__(self,
+                 coefficient: int,
+                 n_elements: int = 1000,
+                 first_mean: int = 20,
+                 first_scale: float = 1.0,
+                 second_mean: int = 100,
+                 second_scale: float = 0.5,
+                 seed: int = None):
+
+        self.coefficient = coefficient
+        self.n_elements = n_elements
+        self.first_mean = first_mean
+        self.first_scale = first_scale
+        self.second_mean = second_mean
+        self.second_scale = second_scale
         self.seed = seed
-        self.percentage_of_short_elements = percentage_of_short_elements
 
     def generate(self):
         self.__reset_numpy_random_state()
-        bimodal_distribution = np.concatenate((
-            self.__generate_normal_distribution_of_half(int((self.number_of_elements - self.space_between_peaks) / 2),
-                                                        self.percentage_of_short_elements),
-            self.__generate_normal_distribution_of_half(int((self.number_of_elements + self.space_between_peaks) / 2),
-                                                        1.0 - self.percentage_of_short_elements)
-        ))
-        return bimodal_distribution.astype(int)
+
+        expected_value = (self.first_scale * self.first_mean + self.second_scale * self.second_mean) / 2
+        std = self.coefficient * expected_value
+
+        norm1 = self.__generate_normal_distribution_of_half(self.first_mean, std, self.first_scale)
+        norm2 = self.__generate_normal_distribution_of_half(self.second_mean, std, self.second_scale)
+        bimodal_distribution = np.concatenate((norm1, norm2))
+
+        return bimodal_distribution[np.where(bimodal_distribution > 0)]
 
     def __reset_numpy_random_state(self):
         if self.seed is None:
             seed = random.randint(SEED_MIN_VALUE, SEED_MAX_VALUE)
         else:
             seed = self.seed
+
         np.random.seed(seed)
 
-    def __generate_normal_distribution_of_half(self, mean: int, percentage_of_elements: float):
-        return np.random.normal(mean, self.standard_deviation, int(percentage_of_elements * self.number_of_elements))
+    def __generate_normal_distribution_of_half(self, mean: int, std: float, scale: float):
+        return scale * np.random.normal(loc=mean, scale=std, size=self.n_elements)
