@@ -10,11 +10,11 @@ class BimodalDistributionGenerator:
 
     def __init__(self,
                  coefficient: int,
-                 n_elements: int = 1000,
-                 first_mean: int = 20,
+                 n_elements: int = 10000,
+                 first_mean: int = 0,
                  first_scale: float = 1.0,
                  second_mean: int = 100,
-                 second_scale: float = 0.5,
+                 second_scale: float = 1.0,
                  seed: int = None):
 
         self.coefficient = coefficient
@@ -26,16 +26,19 @@ class BimodalDistributionGenerator:
         self.seed = seed
 
     def generate(self):
-        self.__reset_numpy_random_state()
 
         expected_value = (self.first_scale * self.first_mean + self.second_scale * self.second_mean) / 2
         std = self.coefficient * expected_value
+        print(f'Prior: expected value {expected_value}, std {std}')
 
+        self.__reset_numpy_random_state()
         norm1 = self.__generate_normal_distribution_of_half(self.first_mean, std, self.first_scale)
+
+        self.__reset_numpy_random_state()
         norm2 = self.__generate_normal_distribution_of_half(self.second_mean, std, self.second_scale)
         bimodal_distribution = np.concatenate((norm1, norm2))
 
-        return bimodal_distribution[np.where(bimodal_distribution > 0)]
+        return bimodal_distribution
 
     def __reset_numpy_random_state(self):
         if self.seed is None:
