@@ -41,7 +41,10 @@ class BimodalDistributionGenerator:
 
     def __calculate_percentage_of_short_elements(self):
         x = self.coefficient_of_variation
-        return pow(x, 2) / (pow(x, 2) + 1) + 0.001
+        if x >= 1.2:
+            return pow(x, 2) / (pow(x, 2) + 1) + 0.001
+        else:
+            return 0.5 + 0.25 * self.coefficient_of_variation
 
     def __calculate_mean2(self):
         p = self.percentage_of_short_elements
