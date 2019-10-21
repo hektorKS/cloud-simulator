@@ -20,7 +20,7 @@ def simulate(generator: Generator):
     simulation_executor = SimulationExecutor(tasks=tasks, nodes_number=10, single_node_processing_power=10)
     simulation_executor.execute()
 
-    last_end_time = max(list(map(lambda x: x.end_time, tasks)))
+    last_end_time = max(list(map(lambda item: item.end_time, tasks)))
     print('Last end time: {}'.format(last_end_time))
 
 
