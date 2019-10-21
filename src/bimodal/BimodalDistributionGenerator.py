@@ -2,11 +2,13 @@ import random
 
 import numpy as np
 
+from src.bimodal.Generator import Generator
+
 SEED_MIN_VALUE = 0
 SEED_MAX_VALUE = 100000
 
 
-class BimodalDistributionGenerator:
+class BimodalDistributionGenerator(Generator):
 
     def __init__(self,
                  coefficient: int,
@@ -16,7 +18,7 @@ class BimodalDistributionGenerator:
                  second_mean: int = 100,
                  second_scale: float = 1.0,
                  seed: int = None):
-
+        Generator.__init__(self)
         self.coefficient = coefficient
         self.n_elements = n_elements
         self.first_mean = first_mean
