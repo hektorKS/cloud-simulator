@@ -19,7 +19,6 @@ class SimulationExecutor:
 
         while len(tasks_dict) > 0 or len(list(filter(lambda item: item.is_processing_left(), nodes))) > 0:
             Clock.tick(TICK_VALUE)
-            time = Clock.get_current_time()
 
             keys_to_remove = []
             for index, task in tasks_dict.items():
@@ -35,8 +34,6 @@ class SimulationExecutor:
 
             for node in nodes:
                 node.process_one_tick()
-
-            pass
 
     def generate_nodes(self):
         nodes = []
