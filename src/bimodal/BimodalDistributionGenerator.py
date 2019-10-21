@@ -2,14 +2,17 @@ import random
 
 import numpy as np
 
+from src.bimodal.Generator import Generator
+
 SEED_MIN_VALUE = 0
 SEED_MAX_VALUE = 100000
 
 
-class BimodalDistributionGenerator:
+class BimodalDistributionGenerator(Generator):
 
     def __init__(self, number_of_elements: int, space_between_peaks: int, standard_deviation: int,
                  percentage_of_short_elements: float, seed: int = None):
+        Generator.__init__(self)
         assert number_of_elements > 0
         assert space_between_peaks > 0
         assert standard_deviation > 0
