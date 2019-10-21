@@ -10,7 +10,7 @@ from src.task.TasksGenerator import TasksGenerator
 def main():
     generator = BimodalDistributionGenerator(coefficient=10)
     draw_distribution(generator)
-    simulate(generator)
+    # simulate(generator)
 
 
 def simulate(generator: Generator):
