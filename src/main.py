@@ -5,13 +5,11 @@ from src.bimodal.HistogramDrawer import HistogramDrawer
 from src.task.TasksGenerator import TasksGenerator
 
 COEFFICIENT_OF_VARIATION = 10
-MEAN1 = 300
 
 
 def main():
     generator = BimodalDistributionGeneratorFactory.create(
-        COEFFICIENT_OF_VARIATION,
-        MEAN1
+        COEFFICIENT_OF_VARIATION
     )
     draw_distribution(generator)
     # simulate(generator)

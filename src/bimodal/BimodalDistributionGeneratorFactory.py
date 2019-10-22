@@ -2,15 +2,16 @@ from src.bimodal.BimodalDistributionGenerator import BimodalDistributionGenerato
 
 NUMBER_OF_ELEMENTS = 10000
 STANDARD_DEVIATION = 60
+MEAN1 = 2000
 
 
 class BimodalDistributionGeneratorFactory:
 
     @staticmethod
-    def create(coefficient_of_variation: float, mean1: int):
+    def create(coefficient_of_variation: float):
         return BimodalDistributionGenerator(
             NUMBER_OF_ELEMENTS,
             STANDARD_DEVIATION,
             coefficient_of_variation,
-            mean1
+            MEAN1
         )
