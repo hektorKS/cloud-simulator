@@ -3,17 +3,17 @@ from math import sqrt
 
 import numpy as np
 
-from src.bimodal.Generator import Generator
+from src.bimodal.DistributionGenerator import DistributionGenerator
 
 SEED_MIN_VALUE = 0
 SEED_MAX_VALUE = 100000
 
 
-class BimodalDistributionGenerator(Generator):
+class BimodalDistributionGenerator(DistributionGenerator):
 
     def __init__(self, number_of_elements: int, standard_deviation: int,
                  coefficient_of_variation: float, mean1: int, seed: int = None):
-        Generator.__init__(self)
+        DistributionGenerator.__init__(self)
         assert number_of_elements > 0
         assert standard_deviation > 0
         self.number_of_elements = number_of_elements
@@ -54,3 +54,6 @@ class BimodalDistributionGenerator(Generator):
         x = self.coefficient_of_variation
         m = self.mean1
         return (p * (pow(x, 2) + 1) * (sqrt(-(p * pow(m, 2) * pow(x, 2)) / ((p - 1) * pow((p * pow(x, 2) + p - pow(x, 2)), 2))) + m) - pow(x,2) * sqrt(-(p * pow(m, 2) * pow(x, 2)) / ((p - 1) * pow((p * pow(x, 2) + p - pow(x, 2)), 2)))) / (p * pow(x, 2) + p - pow(x, 2))
+
+    def set_number_of_elements(self, number_of_elements: int):
+        self.number_of_elements = number_of_elements
