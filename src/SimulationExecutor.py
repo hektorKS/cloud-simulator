@@ -1,8 +1,6 @@
 from src.task.Clock import Clock
 from src.task.Node import Node
 
-TICK_VALUE = 1
-
 
 class SimulationExecutor:
 
@@ -18,7 +16,7 @@ class SimulationExecutor:
         node_pointer = 0
 
         while len(tasks_dict) > 0 or len(list(filter(lambda item: item.is_processing_left(), nodes))) > 0:
-            Clock.tick(TICK_VALUE)
+            Clock.tick(1)
 
             keys_to_remove = []
             for index, task in tasks_dict.items():

@@ -2,17 +2,17 @@ import random
 
 import numpy as np
 
-from src.bimodal.Generator import Generator
+from src.bimodal.DistributionGenerator import DistributionGenerator
 
 SEED_MIN_VALUE = 0
 SEED_MAX_VALUE = 100000
 
 
-class BimodalDistributionGenerator(Generator):
+class BimodalDistributionGenerator(DistributionGenerator):
 
     def __init__(self, number_of_elements: int, space_between_peaks: int, standard_deviation: int,
                  percentage_of_short_elements: float, seed: int = None):
-        Generator.__init__(self)
+        DistributionGenerator.__init__(self)
         assert number_of_elements > 0
         assert space_between_peaks > 0
         assert standard_deviation > 0
@@ -43,3 +43,6 @@ class BimodalDistributionGenerator(Generator):
 
     def __generate_normal_distribution_of_half(self, mean: int, percentage_of_elements: float):
         return np.random.normal(mean, self.standard_deviation, int(percentage_of_elements * self.number_of_elements))
+
+    def set_number_of_elements(self, number_of_elements: int):
+        self.number_of_elements = number_of_elements

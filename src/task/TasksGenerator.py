@@ -1,24 +1,38 @@
 import math
+import random
 
-from src.bimodal.Generator import Generator
+from src.bimodal.DistributionGenerator import DistributionGenerator
 from src.task.Task import Task
 
 
 class TasksGenerator:
 
-    def __init__(self, length_generator: Generator, posting_time_generator: Generator):
+    def __init__(self, length_generator: DistributionGenerator, tasks_number_generator: DistributionGenerator):
         self.length_generator = length_generator
-        self.posting_time_generator = posting_time_generator
+        self.tasks_number_generator = tasks_number_generator
 
-    def generate_tasks(self):
+    def generate_tasks(self, expected_tasks_number: int = 10000):
         tasks = []
-        lengths = self.length_generator.generate().tolist()
-        posting_times = self.posting_time_generator.generate().tolist()
+        tasks_numbers = self.tasks_number_generator.generate().tolist()
+        tasks_numbers = TasksGenerator.__make_positive(tasks_numbers)
 
-        lengths = list(map(lambda item: int(math.fabs(item)), lengths))
-        posting_times = list(map(lambda item: int(math.fabs(item)), posting_times))
+        current_posting_time = 0
+        while len(tasks) < expected_tasks_number:
+            self.length_generator.set_number_of_elements(random.choice(tasks_numbers))
+            lengths = self.__generate_lengths()
 
-        tasks_count = len(lengths)
-        for index in range(tasks_count):
-            tasks.append(Task(lengths[index], posting_times[index]))
+            for length in lengths:
+                if len(tasks) == expected_tasks_number:
+                    break
+                tasks.append(Task(length, current_posting_time))
+            current_posting_time = current_posting_time + 1
+
         return tasks
+
+    def __generate_lengths(self, ):
+        lengths = self.length_generator.generate().tolist()
+        return TasksGenerator.__make_positive(lengths)
+
+    @staticmethod
+    def __make_positive(collection: list):
+        return list(map(lambda item: int(math.fabs(item)), collection))

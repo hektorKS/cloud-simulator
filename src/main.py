@@ -1,6 +1,6 @@
 from src.SimulationExecutor import SimulationExecutor
 from src.bimodal.BimodalDistributionGenerator import BimodalDistributionGenerator
-from src.bimodal.Generator import Generator
+from src.bimodal.DistributionGenerator import DistributionGenerator
 from src.bimodal.HistogramDrawer import HistogramDrawer
 from src.task.TasksGenerator import TasksGenerator
 
@@ -24,9 +24,9 @@ def main():
     simulate(generator)
 
 
-def simulate(generator: Generator):
+def simulate(generator: DistributionGenerator):
     tasks_generator = TasksGenerator(generator, generator)
-    tasks = tasks_generator.generate_tasks()
+    tasks = tasks_generator.generate_tasks(expected_tasks_number=100000)
 
     simulation_executor = SimulationExecutor(tasks=tasks, nodes_number=10, single_node_processing_power=10)
     simulation_executor.execute()
@@ -35,7 +35,7 @@ def simulate(generator: Generator):
     print('Last end time: {}'.format(last_end_time))
 
 
-def draw_distribution(generator: Generator):
+def draw_distribution(generator: DistributionGenerator):
     bimodal_distribution = generator.generate()
     HistogramDrawer.draw(bimodal_distribution, NUMBER_OF_HISTOGRAM_COLUMNS)
 
