@@ -11,7 +11,7 @@ class TasksGenerator:
         self.length_generator = length_generator
         self.tasks_number_generator = tasks_number_generator
 
-    def generate_tasks(self, expected_tasks_number: int = 10000):
+    def generate_tasks(self, expected_tasks_number: int = 10000, delta_time: int = 1000):
         tasks = []
         tasks_numbers = self.tasks_number_generator.generate().tolist()
         tasks_numbers = TasksGenerator.__make_positive(tasks_numbers)
@@ -24,8 +24,8 @@ class TasksGenerator:
             for length in lengths:
                 if len(tasks) == expected_tasks_number:
                     break
-                tasks.append(Task(length, current_posting_time))
-            current_posting_time = current_posting_time + 1
+                tasks.append(Task(length, current_posting_time + random.randint(0, delta_time - 1)))
+            current_posting_time = current_posting_time + delta_time
 
         return tasks
 
