@@ -14,7 +14,6 @@ class TasksGenerator:
     def generate_tasks(self, expected_tasks_number: int = 10000, delta_time: int = 1000):
         tasks = []
         tasks_numbers = self.tasks_number_generator.generate().tolist()
-        tasks_numbers = TasksGenerator.__make_positive(tasks_numbers)
 
         current_posting_time = 0
         while len(tasks) < expected_tasks_number:
@@ -30,9 +29,4 @@ class TasksGenerator:
         return tasks
 
     def __generate_lengths(self, ):
-        lengths = self.length_generator.generate().tolist()
-        return TasksGenerator.__make_positive(lengths)
-
-    @staticmethod
-    def __make_positive(collection: list):
-        return list(map(lambda item: int(math.fabs(item)), collection))
+        return self.length_generator.generate().tolist()
