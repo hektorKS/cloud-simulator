@@ -30,6 +30,9 @@ class BimodalDistributionGenerator(DistributionGenerator):
             self.__generate_normal_distribution_of_half(int(self.mean1), self.percentage_of_short_elements),
             self.__generate_normal_distribution_of_half(int(self.mean2), 1.0 - self.percentage_of_short_elements)
         ))
+
+        assert bimodal_distribution[bimodal_distribution <= 0].size <= 0, \
+            "Bad params passed to generator, negative value occurred"
         return bimodal_distribution.astype(int)
 
     def __reset_numpy_random_state(self):
