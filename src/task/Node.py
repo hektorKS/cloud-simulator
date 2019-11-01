@@ -26,7 +26,7 @@ class Node:
     def is_processing_left(self):
         return len(self.tasks_ready) > 0
 
-    def get_registered_ready_tasks_number(self):
+    def get_ready_tasks_number(self):
         return len(self.tasks_ready)
 
     def __task_finished(self, task: Task):

@@ -20,7 +20,7 @@ class SimulationExecutor:
             keys_to_remove = []
             for index, task in tasks_dict.items():
                 if task.is_ready_to_start():
-                    chosen_node = min(nodes, key=lambda item: item.get_registered_ready_tasks_number())
+                    chosen_node = min(nodes, key=lambda item: item.get_ready_tasks_number())
                     chosen_node.register_ready_task(task)
                     keys_to_remove.append(index)
 
