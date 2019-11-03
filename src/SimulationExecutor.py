@@ -8,12 +8,12 @@ class SimulationExecutor:
     def __init__(self, tasks: list, nodes_number: int, system_load: float):
         self.tasks = tasks
         self.nodes_number = nodes_number
-        self.single_node_processing_power = self.calculate_single_node_processing_power(system_load)
+        self.single_node_processing_power = self.__calculate_single_node_processing_power(system_load)
 
     def execute(self):
         tasks_dict = dict((index, value) for index, value in enumerate(self.tasks))
 
-        nodes = self.generate_nodes()
+        nodes = self.__generate_nodes()
 
         while len(tasks_dict) > 0 or len(list(filter(lambda item: item.is_processing_left(), nodes))) > 0:
             Clock.tick(1)
@@ -31,13 +31,13 @@ class SimulationExecutor:
             for node in nodes:
                 node.process_one_tick()
 
-    def generate_nodes(self):
+    def __generate_nodes(self):
         nodes = []
         for index in range(self.nodes_number):
             nodes.append(Node(self.single_node_processing_power))
         return nodes
 
-    def calculate_single_node_processing_power(self, system_load):
+    def __calculate_single_node_processing_power(self, system_load):
         tasks_submission_freq = len(self.tasks) / max(task.posting_time for task in self.tasks)
         avg_task_length = mean([task.length for task in self.tasks])
         single_node_processing_power = (tasks_submission_freq * avg_task_length) / (system_load * self.nodes_number)
