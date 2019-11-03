@@ -5,6 +5,7 @@ from src.bimodal.HistogramDrawer import HistogramDrawer
 from src.task.TasksGenerator import TasksGenerator
 
 COEFFICIENT_OF_VARIATION = 0.2
+SYSTEM_LOAD = 0.5
 
 
 def main():
@@ -19,7 +20,7 @@ def simulate(generator: DistributionGenerator):
     tasks_generator = TasksGenerator(generator, generator)
     tasks = tasks_generator.generate_tasks(expected_tasks_number=10000)
 
-    simulation_executor = SimulationExecutor(tasks=tasks, nodes_number=10, single_node_processing_power=10)
+    simulation_executor = SimulationExecutor(tasks=tasks, nodes_number=10, system_load=SYSTEM_LOAD)
     simulation_executor.execute()
 
     last_end_time = max(list(map(lambda item: item.end_time, tasks)))
