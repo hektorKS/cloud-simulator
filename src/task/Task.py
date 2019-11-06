@@ -30,8 +30,12 @@ class Task:
             units_used = processing_units - units_left
             self.units_processed = self.units_processed + units_used
             self.end_time = Clock.get_current_time()
-            print('Processing finished: {}'.format(self))
+            #print('Processing finished: {}'.format(self))
             return units_left
         else:
             self.units_processed = self.units_processed + processing_units
             return 0
+
+    def reset(self):
+        self.units_processed = 0
+        self.end_time = -1

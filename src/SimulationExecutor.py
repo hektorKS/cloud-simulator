@@ -39,6 +39,8 @@ class SimulationExecutor:
 
     def __calculate_single_node_processing_power(self, system_load):
         tasks_submission_freq = len(self.tasks) / max(task.posting_time for task in self.tasks)
+        self.Lambda = tasks_submission_freq
         avg_task_length = mean([task.length for task in self.tasks])
         single_node_processing_power = (tasks_submission_freq * avg_task_length) / (system_load * self.nodes_number)
+        self.mi = single_node_processing_power
         return int(single_node_processing_power)
