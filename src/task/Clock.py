@@ -8,3 +8,7 @@ class Clock:
     @staticmethod
     def get_current_time():
         return Clock.__current_time
+
+    @staticmethod
+    def reset():
+        Clock.__current_time = 0

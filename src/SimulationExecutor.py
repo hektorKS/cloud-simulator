@@ -9,12 +9,12 @@ class SimulationExecutor:
         self.tasks = tasks
         self.nodes_number = nodes_number
         self.single_node_processing_power = self.__calculate_single_node_processing_power(system_load)
+        Clock.reset()
 
     def execute(self):
         tasks_dict = dict((index, value) for index, value in enumerate(self.tasks))
 
         nodes = self.__generate_nodes()
-
         while len(tasks_dict) > 0 or len(list(filter(lambda item: item.is_processing_left(), nodes))) > 0:
             Clock.tick(1)
 
