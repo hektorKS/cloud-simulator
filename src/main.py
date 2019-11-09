@@ -8,8 +8,7 @@ import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
 
 COEFFICIENT_OF_VARIATION = 1.0
-SYSTEM_LOADS = np.linspace(0.1, 1.0, 100)
-N_EXECUTIONS = 100
+SYSTEM_LOADS = np.linspace(0.1, 1.0, 10)
 
 
 def main():
@@ -26,8 +25,7 @@ def simulate(generator: DistributionGenerator):
     tasks_generator = TasksGenerator(generator, generator)
     tasks = tasks_generator.generate_tasks(expected_tasks_number=10000)
     delays = []
-    for i in range(N_EXECUTIONS):
-
+    for i in range(len(SYSTEM_LOADS)):
         simulation_executor = SimulationExecutor(tasks=tasks, nodes_number=10, system_load=SYSTEM_LOADS[i])
         simulation_executor.execute()
         tasks = simulation_executor.tasks

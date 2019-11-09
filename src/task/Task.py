@@ -9,7 +9,7 @@ class Task:
         self.length = length
         self.posting_time = posting_time
         self.units_processed = 0
-        self.end_time = -1
+        self.end_time = -1.0
 
     def __str__(self):
         return 'Task(id={}, length={}, posting_time={}, units_processed={}, end_time={})'\
@@ -24,12 +24,12 @@ class Task:
     def is_finished(self):
         return self.end_time != -1
 
-    def execute(self, processing_units: int):
+    def execute(self, processing_units: int, processing_power: int):
         if processing_units >= self.length - self.units_processed:
             units_left = processing_units - (self.length - self.units_processed)
             units_used = processing_units - units_left
             self.units_processed = self.units_processed + units_used
-            self.end_time = Clock.get_current_time()
+            self.end_time = Clock.get_current_time() + ((processing_power - units_left) / processing_power)
             #print('Processing finished: {}'.format(self))
             return units_left
         else:
@@ -38,4 +38,4 @@ class Task:
 
     def reset(self):
         self.units_processed = 0
-        self.end_time = -1
+        self.end_time = -1.0

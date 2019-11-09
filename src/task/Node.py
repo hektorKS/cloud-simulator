@@ -19,7 +19,7 @@ class Node:
         for task in self.tasks_ready[:]:
             if units_left < 1:
                 break
-            units_left = task.execute(units_left)
+            units_left = task.execute(units_left, self.processing_power)
             if task.is_finished():
                 self.__task_finished(task)
 
